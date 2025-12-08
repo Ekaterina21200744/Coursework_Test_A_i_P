@@ -36,7 +36,7 @@ class FS_UI:
 
         with allure.step("Открытие главной страницы Fun&Sun"):
             self.driver.get(
-            "https://fstravel.com/?utm_referrer=https%3A%2F%2Fmy.sky.pro%2F/")
+                "https://fstravel.com/?utm_referrer=https%3A%2F%2Fmy.sky.pro%2F/")
 
         with allure.step("Максимизация окна браузера"):
             self.driver.maximize_window()
@@ -54,7 +54,9 @@ class FS_UI:
             locator_city_departure = self.locators["locator_city_departure"]
 
         with allure.step("Ввод города отправления"):
-            city = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, locator_city_departure)))
+            city = self.wait.until(
+                EC.element_to_be_clickable(
+                    (By.CSS_SELECTOR, locator_city_departure)))
 
         with allure.step("Очистка поля ввода города отправления"):
             city.clear()
@@ -70,7 +72,9 @@ class FS_UI:
             locator_city_departure = self.locators["locator_city_departure"]
 
         with allure.step("Ввод города отправления с дефисом"):
-            city = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, locator_city_departure)))
+            city = self.wait.until(
+                EC.element_to_be_clickable(
+                    (By.CSS_SELECTOR, locator_city_departure)))
 
         with allure.step("Очистка поля ввода города отправления"):
             city.clear()
@@ -86,7 +90,9 @@ class FS_UI:
             locator_arrival = self.locators["locator_arrival"]
 
         with allure.step("Ввод страны прибытия"):
-            country_arrival = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, locator_arrival)))
+            country_arrival = self.wait.until(
+                EC.element_to_be_clickable(
+                    (By.CSS_SELECTOR, locator_arrival)))
 
         with allure.step("Очистка поля ввода страны прибытия"):
             country_arrival.clear()
@@ -102,7 +108,9 @@ class FS_UI:
             locator_who_coming = self.locators["locator_who_coming"]
 
         with allure.step("Получение текста с количеством взрослых"):
-            who_coming = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, locator_who_coming)))
+            who_coming = self.wait.until(
+                EC.element_to_be_clickable(
+                    (By.CSS_SELECTOR, locator_who_coming)))
             text = who_coming.text
 
             import re
@@ -126,7 +134,9 @@ class FS_UI:
             self.previous_adults_count = self.get_current_adults_count()
 
         with allure.step("Нажатие на кнопку увеличения количества взрослых"):
-            increase_button = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, locator_increase)))
+            increase_button = self.wait.until(
+                EC.element_to_be_clickable(
+                    (By.CSS_SELECTOR, locator_increase)))
             increase_button.click()
 
     @allure.step("Уменьшение количества взрослых")
@@ -152,7 +162,9 @@ class FS_UI:
             locator_find = self.locators["locator_find"]
 
         with allure.step("Нажатие на кнопку 'Найти'"):
-            find_button = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, locator_find)))
+            find_button = self.wait.until(
+                EC.element_to_be_clickable(
+                    (By.CSS_SELECTOR, locator_find)))
             find_button.click()
 
     @allure.step("Нажатие на кнопку 'Рекомендации для вас'")
@@ -170,7 +182,7 @@ class FS_UI:
     @allure.step("Нажатие на кнопку 'По возрастанию цены'")
     def button_ascending_pricemodal(self):
         """Нажатие на кнопку 'По возрастанию цены'"""
-        
+
         with allure.step("Получение локатора для кнопки 'По возрастанию цены'"):
             locator_ascending_pricemodal = self.locators["locator_ascending_pricemodal"]
 

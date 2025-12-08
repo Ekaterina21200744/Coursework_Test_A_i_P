@@ -5,11 +5,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from pages.FS_UI import FS_UI
 
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+driver = webdriver.Chrome(
+    service=ChromeService(
+        ChromeDriverManager().install()))
 
 wait = WebDriverWait(driver, 20)
 
 fs_ui = FS_UI(driver)
+
 
 @allure.title("Fun&Sun UI тесты")
 @allure.severity(allure.severity_level.CRITICAL)
@@ -22,8 +25,9 @@ def test_search_tour_ui():
     fs_ui.input_departure_city()
     fs_ui.input_arrival_country()
     fs_ui.get_current_adults_count()
-    assert fs_ui.get_current_adults_count ==2
+    assert fs_ui.get_current_adults_count == 2
     fs_ui.button_find()
+
 
 @allure.title("Fun&Sun UI тесты")
 @allure.severity(allure.severity_level.CRITICAL)
@@ -38,6 +42,7 @@ def test_search_tour_with_city_hyphen_ui():
     fs_ui.get_current_adults_count()
     assert fs_ui.get_current_adults_count == 2
     fs_ui.button_find()
+
 
 @allure.title("Fun&Sun UI тесты")
 @allure.severity(allure.severity_level.CRITICAL)
@@ -55,6 +60,7 @@ def test_search_tour_with_increase_number_ui():
     assert new_count == initial_count + 1
     fs_ui.button_find()
 
+
 @allure.title("Fun&Sun UI тесты")
 @allure.severity(allure.severity_level.CRITICAL)
 @allure.description("Поиск тура с уменьшением количества взрослых")
@@ -71,8 +77,9 @@ def test_search_tour_with_decrease_number_ui():
     assert new_count == initial_count + 1
     fs_ui.button_find()
 
+
 @allure.title("Fun&Sun UI тесты")
-@allure.severity(allure.severity_level.CRITICAL)    
+@allure.severity(allure.severity_level.CRITICAL)
 @allure.description("Сортировка туров по возрастанию цены")
 @allure.feature("FS Travel UI-тесты")
 def test_sort_by_ascending_price_ui():
@@ -82,9 +89,7 @@ def test_sort_by_ascending_price_ui():
     fs_ui.input_departure_city()
     fs_ui.input_arrival_country()
     fs_ui.get_current_adults_count()
-    assert fs_ui.get_current_adults_count ==2
+    assert fs_ui.get_current_adults_count == 2
     fs_ui.button_find()
-    fs_ui.button_recommend()    
+    fs_ui.button_recommend()
     fs_ui.button_ascending_pricemodal
-
-
