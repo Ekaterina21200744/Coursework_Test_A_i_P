@@ -10,13 +10,15 @@ class FS_UI:
 
     locators = {
         "locator_city_departure": ".departure-city-field__pinput_input",
-        "locator_who_coming": ".tourists-field__body_title",
+        "locator_who_coming": ".tourists-field__body_tourists",
         "locator_increase": ".tourists-popup__adults_inc",
         "locator_decrease": ".tourists-popup__adults_dec",
         "locator_arrival": ".arrival-country-field__pinput_input",
         "locator_find": ".v-btn-yellow.tour-search__button.h-64",
-        "locator_recommend": ".progress-recomendation-title",
-        "locator_ascending_pricemodal": "//*[contains(@class, 'modal-text') and normalize-space()='По возрастанию цены']"
+        "locator_recommend": ".img-arrow-down",
+        "locator_ascending_pricemodal": "//*[contains(@class, 'modal-text') and normalize-space()='По возрастанию цены']",
+        "locator_popup": ".popmechanic-close",
+        "locator_popup_luck": "button.close"
     }
 
     @allure.step("Инициализация FS_UI")
@@ -27,8 +29,8 @@ class FS_UI:
             self.driver = driver
         with allure.step("Выставление ожидания"):
             self.wait = WebDriverWait(driver, 20)
-        with allure.step("Установка значения количества взрослых по умолчанию"):
-            self.previous_adults_count = 2
+        # with allure.step("Установка значения количества взрослых по умолчанию"):
+        #     self.previous_adults_count = 2
 
     @allure.step("Открытие главной страницы Fun&Sun")
     def open(self):
@@ -102,26 +104,41 @@ class FS_UI:
 
     @allure.step("Получение текущего количества взрослых")
     def get_current_adults_count(self):
-        """Получает текущее количество взрослых"""
+         """Получает текущее количество взрослых"""
 
-        with allure.step("Получение локатора для количества взрослых"):
-            locator_who_coming = self.locators["locator_who_coming"]
+         with allure.step("Получение локатора для количества взрослых"):
+             locator_who_coming = self.locators["locator_who_coming"]
 
-        with allure.step("Получение текста с количеством взрослых"):
-            who_coming = self.wait.until(
-                EC.element_to_be_clickable(
-                    (By.CSS_SELECTOR, locator_who_coming)))
-            text = who_coming.text
+         with allure.step("Получение текста с количеством взрослых"):
+             who_coming = self.wait.until(
+                 EC.element_to_be_clickable(
+                     (By.CSS_SELECTOR, locator_who_coming)))
+             text = who_coming.text
 
-            import re
-            numbers = re.findall(r'\d+', text)
-            if numbers:
-                number = int(numbers[0])
-            else:
-                number = 0  # Или выбросить исключение
+             import re
+             numbers = re.findall(r'\d+', text)
+             if numbers:
+                 number = int(numbers[0])
+             else:
+                 number = 0  # Или выбросить исключение
 
-            with allure.step("Возврат количества взрослых"):
-                return number
+             with allure.step("Возврат количества взрослых"):
+                 return number      
+            
+    @allure.step("Нажатие на кнопку 'Кто едет'")
+    def click_button_who_coming(self):
+            """Нажатие на кнопку 'Кто едет'"""
+
+            with allure.step("Получение локатора для кнопки 'Кто едет'"):
+                locator_who_coming = self.locators["locator_who_coming"]
+
+            with allure.step("Нажатие на кнопку 'Кто едет'"):
+                who_coming = self.wait.until(
+                    EC.element_to_be_clickable(
+                        (By.CSS_SELECTOR, locator_who_coming)))
+                who_coming.click()            
+
+            
 
     @allure.step("Увеличение количества взрослых")
     def increase_number_adults(self):
@@ -167,6 +184,24 @@ class FS_UI:
                     (By.CSS_SELECTOR, locator_find)))
             find_button.click()
 
+    @allure.step("Закрытие всплывающих окон")
+    def close_popups(self):
+        """Закрытие всплывающих окон"""
+
+        with allure.step("Ожидание появления и закрытие всплывающего окна"):
+            locator_popup = self.locators["locator_popup"]
+        with allure.step("Закрытие всплывающего окна"):
+            popup_close = self.wait.until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, locator_popup)))
+            popup_close.click()
+
+        with allure.step("Ожидание появления и закрытие всплывающего окна 'Испытайте вашу удачу'"):
+            locator_popup_luck = self.locators["locator_popup_luck"]
+        with allure.step("Закрытие всплывающего окна 'Испытайте вашу удачу'"):
+             popup_close_luck = self.wait.until(
+                 EC.element_to_be_clickable((By.CSS_SELECTOR, locator_popup_luck)))
+             popup_close_luck.click()
+
     @allure.step("Нажатие на кнопку 'Рекомендации для вас'")
     def button_recommend(self):
         """Нажатие на кнопку 'Рекомендации для вас'"""
@@ -190,3 +225,10 @@ class FS_UI:
             button_ascending_pricemodal = self.wait.until(
                 EC.element_to_be_clickable((By.XPATH, locator_ascending_pricemodal)))
             button_ascending_pricemodal.click
+
+    def close_driver(self):
+        """Закрытие драйвера"""
+
+        with allure.step("Закрытие драйвера"):
+            self.driver.quit()
+       

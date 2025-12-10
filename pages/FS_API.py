@@ -1,4 +1,3 @@
-from config import BASE_API_URL
 import requests
 import allure
 from pages.config import BASE_API_URL
