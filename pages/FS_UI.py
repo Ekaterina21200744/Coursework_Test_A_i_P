@@ -17,8 +17,8 @@ class FS_UI:
         "locator_find": ".v-btn-yellow.tour-search__button.h-64",
         "locator_recommend": ".img-arrow-down",
         "locator_ascending_pricemodal": "//*[contains(@class, 'modal-text') and normalize-space()='По возрастанию цены']",
-        "locator_popup": ".popmechanic-close",
-        "locator_popup_luck": "button.close"
+        "locator_popup": "//*[@class ='popmechanic-close']",
+        "locator_popup_luck": "//*[@class='close'][@title='Закрыть']')))"
     }
 
     @allure.step("Инициализация FS_UI")
@@ -192,14 +192,14 @@ class FS_UI:
             locator_popup = self.locators["locator_popup"]
         with allure.step("Закрытие всплывающего окна"):
             popup_close = self.wait.until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, locator_popup)))
+                EC.element_to_be_clickable((By.XPATH, locator_popup)))
             popup_close.click()
 
         with allure.step("Ожидание появления и закрытие всплывающего окна 'Испытайте вашу удачу'"):
             locator_popup_luck = self.locators["locator_popup_luck"]
         with allure.step("Закрытие всплывающего окна 'Испытайте вашу удачу'"):
              popup_close_luck = self.wait.until(
-                 EC.element_to_be_clickable((By.CSS_SELECTOR, locator_popup_luck)))
+                 EC.element_to_be_clickable((By.XPATH, locator_popup_luck)))
              popup_close_luck.click()
 
     @allure.step("Нажатие на кнопку 'Рекомендации для вас'")
